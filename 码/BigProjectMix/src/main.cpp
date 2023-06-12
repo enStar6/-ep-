@@ -85,12 +85,12 @@ void arm(double x, double y, double arm1 = 130, double arm2 = 130)    //机械�
   //constrain函数的作用是限制舵机角度在一定范围内
   if(y >= 0){
     y = abs(y);
-    angle2 = constrain((acos((x*x+y*y)/(260*sqrt(x*x+y*y))) + atan(y/x))*(180/M_PI),0,130);
+    angle2 = (acos((x*x+y*y)/(260*sqrt(x*x+y*y))) + atan(y/x))*(180/M_PI);
   }else{
     y = abs(y);
-    angle2 = constrain((acos((x*x+y*y)/(260*sqrt(x*x+y*y))) - atan(y/x))*(180/M_PI),0,130);   
+    angle2 = (acos((x*x+y*y)/(260*sqrt(x*x+y*y))) - atan(y/x))*(180/M_PI);   
   }
-  angle1 = constrain(angle2 + (acos((33800-x*x-y*y)/33800))*(180/M_PI),90,165);
+  angle1 = angle2 + (acos((33800-x*x-y*y)/33800))*(180/M_PI);
   //舵机角度输出
   servoPulse(servo1Pin, angle1);
   servoPulse(servo2Pin, 180-angle2);
@@ -214,6 +214,8 @@ void loop() {
     cn = 0;
     ct = 1;
   }
+  
+// ------------------------------------------------------------------------------------------------------------------------------------
   
   if(vy == 0){                                             //左右摇杆优先级系统
     i = 0;                                                 //0：平等  1：左  2：右
